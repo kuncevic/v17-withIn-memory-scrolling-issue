@@ -1,0 +1,229 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "cli": {
+    "packageManager": "yarn",
+    "analytics": "51d84705-3f11-4ec9-84d7-a0682fcfe732",
+    "schematicCollections": [
+      "@angular-eslint/schematics",
+      "@angular-eslint/schematics",
+      "@angular-eslint/schematics"
+    ]
+  },
+  "projects": {
+    "consulting": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/consulting",
+      "sourceRoot": "projects/consulting/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/consulting/browser",
+            "index": "projects/consulting/src/index.html",
+            "main": "projects/consulting/src/main.ts",
+            "polyfills": "projects/consulting/src/polyfills.ts",
+            "tsConfig": "projects/consulting/tsconfig.app.json",
+            "assets": [
+              "projects/consulting/src/favicon.ico",
+              "projects/consulting/src/assets",
+              "projects/consulting/src/assets/images",
+              "projects/consulting/src/robots.txt",
+              "projects/consulting/src/sitemap.xml",
+              "projects/consulting/src/manifest.webmanifest"
+            ],
+            "styles": ["projects/consulting/src/styles.scss"],
+            "preserveSymlinks": true,
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/consulting/src/environments/environment.ts",
+                  "with": "projects/consulting/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "15kb"
+                }
+              ]
+            }
+          },
+          "defaultConfiguration": ""
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "buildTarget": "consulting:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "consulting:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "buildTarget": "consulting:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/consulting/src/test.ts",
+            "polyfills": "projects/consulting/src/polyfills.ts",
+            "tsConfig": "projects/consulting/tsconfig.spec.json",
+            "karmaConfig": "projects/consulting/karma.conf.js",
+            "assets": [
+              "projects/consulting/src/favicon.ico",
+              "projects/consulting/src/assets"
+            ],
+            "styles": ["projects/consulting/src/styles.scss"],
+            "scripts": []
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/consulting/e2e/protractor.conf.js",
+            "devServerTarget": "consulting:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "consulting:serve:production"
+            }
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/consulting/server",
+            "main": "projects/consulting/server.ts",
+            "tsConfig": "projects/consulting/tsconfig.server.json",
+            "sourceMap": true,
+            "optimization": false,
+            "buildOptimizer": false
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "projects/consulting/src/environments/environment.ts",
+                  "with": "projects/consulting/src/environments/environment.prod.ts"
+                }
+              ],
+              "sourceMap": false,
+              "optimization": true,
+              "buildOptimizer": true
+            }
+          },
+          "defaultConfiguration": ""
+        },
+        "serve-ssr": {
+          "builder": "@angular-devkit/build-angular:ssr-dev-server",
+          "options": {
+            "browserTarget": "consulting:build",
+            "serverTarget": "consulting:server"
+          },
+          "configurations": {
+            "development": {
+              "browserTarget": "consulting:build:development",
+              "serverTarget": "consulting:server:development"
+            },
+            "production": {
+              "browserTarget": "consulting:build:production",
+              "serverTarget": "consulting:server:production"
+            }
+          }
+        },
+        "prerender": {
+          "builder": "@angular-devkit/build-angular:prerender",
+          "options": {
+            "browserTarget": "consulting:build:production",
+            "serverTarget": "consulting:server:production",
+            "routes": []
+          },
+          "configurations": {
+            "production": {}
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/consulting/**/*.ts",
+              "projects/consulting/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "shared-library": {
+      "projectType": "library",
+      "root": "projects/shared-library",
+      "sourceRoot": "projects/shared-library/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/shared-library/tsconfig.lib.json",
+            "project": "projects/shared-library/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/shared-library/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/shared-library/src/test.ts",
+            "tsConfig": "projects/shared-library/tsconfig.spec.json",
+            "karmaConfig": "projects/shared-library/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/shared-library/**/*.ts",
+              "projects/shared-library/**/*.html"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
